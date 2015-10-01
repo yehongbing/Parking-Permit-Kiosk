@@ -518,7 +518,7 @@ static boolean size = false;
             
             else if(thirdPanel == component) {
 
-            	if(e.getSource() == swap3N ){
+            	if(e.getSource() == swap3N || e.getSource() == button3[6][4]  ){
                    remove(thirdPanel);
                    add(forthPanel);
             		

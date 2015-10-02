@@ -629,20 +629,25 @@ public class PanelSwap extends JPanel implements ActionListener {
 	   return hasId;
    }
    
-   // check if students.txt contains user input pin
-   private static boolean hasPin(String input) {
-	   boolean hasPin = false;
+   // check if students.txt contains user input pin and pin matches correspond student id
+   private static boolean pinMatched(String id, String pin) {
+	   boolean pinMatched = false;
 	   ArrayList<String> students = new ArrayList<String>();
 	   String[] pins = new String[students.size()];
+	   String[] ids = new String[students.size()];
 	   
 	   students = readStudent();
+	   ids = getField(students, 0);
 	   pins = getField(students, 1);
-	   for(String str : pins) {
-		   if(input.equals(str)) {
-			   hasPin = true;
+	   
+	   
+	   for(int i = 0; i < students.size(); i++) {
+		   if(ids[i].equals(id) && pins[i].equals(pin)) {
+			   pinMatched = true;
 		   }
 	   }
-	   return hasPin;
+
+	   return pinMatched;
    }
    
    // substract the student id field from each line

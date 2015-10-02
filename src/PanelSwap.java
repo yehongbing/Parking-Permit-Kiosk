@@ -1,5 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -9,7 +16,7 @@ import javax.swing.*;
 
 public class PanelSwap extends JPanel implements ActionListener {
     static JFrame frame = new JFrame("Payment Panel");
-static boolean size = false;
+    static boolean size = false;
 	//student number panel
     JPanel firstPanel = new JPanel();
     
@@ -601,6 +608,86 @@ static boolean size = false;
     }
     
     
+    /**
+     * File processing implementations
+     */
+    
+    // check if students.txt contain user input id
+   private static boolean hasID(String input){
+	   
+	   boolean hasId = false;
+	   ArrayList<String> students = new ArrayList<String>();
+	   String[] ids = new String[students.size()];
+	   
+	   students = readStudent();
+	   ids = getField(students, 0);
+	   for(String str : ids) {
+		   if(input.equals(str)) {
+			   hasId = true;
+		   }
+	   }
+	   return hasId;
+   }
+   
+   // check if students.txt contains user input pin
+   private static boolean hasPin(String input) {
+	   boolean hasPin = false;
+	   ArrayList<String> students = new ArrayList<String>();
+	   String[] pins = new String[students.size()];
+	   
+	   students = readStudent();
+	   pins = getField(students, 1);
+	   for(String str : pins) {
+		   if(input.equals(str)) {
+			   hasPin = true;
+		   }
+	   }
+	   return hasPin;
+   }
+   
+   // substract the student id field from each line
+   private static String[] getField(ArrayList<String> students, int index) {
+	   String[] field = new String[students.size()];
+	   String[] temp = new String[5];
+	   for(int i = 0; i < students.size(); i++) {
+		 temp = students.get(i).split(",");
+		 // note to remove any redundant spaces
+		  field[i] = temp[index].trim(); 
+	   }
+	   return field;
+   }
+   // read student.txt file 
+   private static ArrayList<String> readStudent() {
+
+        String fileName = "students.txt";
+        String line = null;
+        ArrayList<String> students = new ArrayList<String>();
+        try {
+            FileReader fileReader = 
+                new FileReader(fileName);
+            BufferedReader bufferedReader = 
+                new BufferedReader(fileReader);
+
+            while((line = bufferedReader.readLine()) != null) {
+                students.add(line);
+                
+            }   
+            bufferedReader.close();         
+        }
+        // Exception handling
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                fileName + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error reading file '" 
+                + fileName + "'");                  
+        }
+        return students;
+        
+    }
 
 
     /**

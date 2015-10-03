@@ -436,8 +436,7 @@ public class PanelSwap extends JPanel implements ActionListener {
 
     /** Listens to the buttons and perform the swap. */
     public void actionPerformed(ActionEvent e) {
-
-        JButton btn = (JButton) e.getSource();
+  JButton btn = (JButton) e.getSource();
         String info = (String) btn.getClientProperty("key");
 
         for (Component component : getComponents())
@@ -453,7 +452,7 @@ public class PanelSwap extends JPanel implements ActionListener {
         	 }
         	
         	 else if (firstPanel == component) {
-        		 
+        		
         		 // example for giving the customer meaningful warning  
         		 if((e.getSource() == swap1N || e.getSource() == button1[6][0]) && studentNum.length() != 9 ){
         			
@@ -462,12 +461,21 @@ public class PanelSwap extends JPanel implements ActionListener {
         		 }
         			 
                  
-            	if(e.getSource() == swap1N || e.getSource() == button1[6][0] )
+            	if((e.getSource() == swap1N || e.getSource() == button1[6][0]) )
             	{
             		if(studentNum.length() == 9){
+            			if(hasID(studentNum) == true )
+            			{
                     remove(firstPanel);
                     add(secondPanel);
+            			}
+            			else{
+              			   JOptionPane.showMessageDialog(null, 
+              					   "your student number does not match our records");	
+            			}
             		}
+            		
+            		
             	}
                
             	else{
@@ -484,6 +492,7 @@ public class PanelSwap extends JPanel implements ActionListener {
          			studentC.setText(studentNum);
          			
           			System.out.println("::::::::Student Number::::::::");
+          			System.out.println("Student Numer matches? "+hasID(studentNum)); 
           			System.out.println(studentNum);
                      
             	}   
@@ -493,8 +502,14 @@ public class PanelSwap extends JPanel implements ActionListener {
             else if(secondPanel == component){
                 
             	if(e.getSource() == swap2N || e.getSource() == button2[6][0]  ){
+            		if(pinMatched(studentNum, pinNum) == true){
                     remove(secondPanel);
                     add(thirdPanel);
+            		}
+            		else{
+            			 JOptionPane.showMessageDialog(null, 
+            					   "the pin your entered is incorecred ");	
+            		}
 
 
             	}
@@ -517,6 +532,7 @@ public class PanelSwap extends JPanel implements ActionListener {
           			pin.setText(pinNum);
           		
           			System.out.println("::::::::PIN CODE::::::::");
+          			System.out.println("Pin matches Student number ? "+ pinMatched(studentNum, pinNum)); 
           			System.out.println(pinNum);
                       
              	}   

@@ -960,7 +960,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 
 
         // making the spalsh panel to be the starting point 
-        add(fifithPanel);
+        add(spalsh);
 
     }
     

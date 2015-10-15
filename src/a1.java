@@ -17,6 +17,8 @@ import javax.swing.*;
 public class a1 extends JPanel implements ActionListener {
 	static JFrame frame = new JFrame("Parking-Permit-Kiosk");
 	static boolean size = false;
+	
+	
 	//student number panel
 	JPanel firstPanel = new JPanel();
 
@@ -191,12 +193,12 @@ public class a1 extends JPanel implements ActionListener {
 		super(new BorderLayout());
 
 
-
 		// student number 
 		JPanel[] panel1 = new JPanel[9];
+		button1 = new JButton[12][12];
 		for (int row = 0; row < alphaNumKey.length; row++) {
 			panel1[row] = new JPanel();
-			button1 = new JButton[12][12];
+			
 			for (int column = 0; column < NumKey[row].length; column++) {
 				button1[row][column] = new JButton(NumKey[row][column]);
 				button1[row][column].putClientProperty("column", column);
@@ -215,9 +217,10 @@ public class a1 extends JPanel implements ActionListener {
 
 		// keyboard for pin number
 		JPanel[] panel2 = new JPanel[9];
+		button2 = new JButton[12][12];
 		for (int row = 0; row < NumKey.length; row++) {
 			panel2[row] = new JPanel();
-			button2 = new JButton[12][12];
+		
 			for (int column = 0; column < NumKey[row].length; column++) {
 
 				button2[row][column] = new JButton(NumKey[row][column]);
@@ -238,12 +241,12 @@ public class a1 extends JPanel implements ActionListener {
 
 		}
 
-
 		// keyboard for email
 		JPanel[] panel3 = new JPanel[9];
+		button3 = new JButton[12][12];
 		for (int row = 0; row < alphaNumKey.length; row++) {
 			panel3[row] = new JPanel();
-			button3 = new JButton[12][12];
+			
 			for (int column = 0; column < alphaNumKey[row].length; column++) {
 
 				button3[row][column] = new JButton(alphaNumKey[row][column]);
@@ -263,10 +266,6 @@ public class a1 extends JPanel implements ActionListener {
 			thirdPanel.add(panel3[row]);
 
 		}
-
-
-
-
 
 		/**splash starts  here*/
 		spalsh.setBackground(Color.white);
@@ -327,7 +326,6 @@ public class a1 extends JPanel implements ActionListener {
 		// student place holder on confirmation panel  is being assigned. with given font 
 		studentPlaceHolderC = new JLabel("your student #:");
 		studentPlaceHolderC.setFont(new Font("Sans-Serif", Font.BOLD, 12));
-
 
 
 		// pin place holder is being assigned. with given font 
@@ -871,8 +869,8 @@ public class a1 extends JPanel implements ActionListener {
 		JComponent newContentPane = new a1();
 		newContentPane.setOpaque(true); // content panes must be opaque
 		frame.setContentPane(newContentPane);
-
-		frame.setSize(1300, 700);
+		frame.pack();
+		//frame.setSize(1300, 700);
 		// Display the window.
 		frame.setVisible(true);
 	}

@@ -18,8 +18,10 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
-import javax.swing.UIManager;
+import javax.swing.border.Border;
 import javax.swing.plaf.synth.SynthLookAndFeel;
+
+import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
 
 
 
@@ -27,6 +29,8 @@ import javax.swing.plaf.synth.SynthLookAndFeel;
 public class PanelSwap extends JPanel implements ActionListener,FocusListener {
     static JFrame frame = new JFrame("Payment Panel");
     
+    private final String LOGO_PATH = "/images/york-university-log.png";
+    private ImageIcon logo = new ImageIcon(LOGO_PATH);
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private DateFormat yearFormat = new SimpleDateFormat("yyyy");
 	private DateFormat monthFormat = new SimpleDateFormat("MM");
@@ -81,6 +85,9 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
     
     
     static boolean size = false;
+    
+    JPanel navPanel = new JPanel();
+    
 	//student number panel
     JPanel firstPanel = new JPanel();
     
@@ -92,12 +99,13 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
     
     // Confirmation Confirmation 
     JPanel forthPanel = new JPanel();
+    JPanel namePanel = new JPanel();
+
     
-    
-    JPanel fifithPanel = new JPanel();
+    JPanel fifthPanel = new JPanel();
     
     // splash page ( *click anywhere page)
-    JPanel spalsh = new JPanel();
+    JPanel splash = new JPanel();
     
     
     /** start of inner panels for within Confirmation (* forth ) panel   */
@@ -105,6 +113,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
     JPanel studentPanel = new JPanel();
     JPanel emailPanel = new JPanel();
     JPanel pinPanel = new JPanel();
+
     JPanel buttonPanel = new JPanel(); 
     JPanel infoPanel = new JPanel();
     JPanel sN = new JPanel();
@@ -129,10 +138,19 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 	
 	//Confirmation panel  labels
 	private JLabel studentPlaceHolderC;
-	private JLabel pinPlaceHolderC;
+	private JLabel namePlaceHolderC;
 	private JLabel emailPlaceHolderC;
 	private JLabel confirmLabel;
+	private JLabel plateLabelC;
+	private JLabel makeLabelC;
+	private JLabel modelLabelC;
+	private JLabel insuranceLabelC;
+	private JLabel policyLabelC;
+	private JLabel daysLabelC;
+	private JLabel amountLabelC;
+
 	
+
 
 	 // text fields  for student number , pin number , and email address( in order ).
 	private JTextField student;
@@ -141,7 +159,16 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 
 	private JTextField studentC;
 	private JTextField emailC;
-	private JTextField pinC;
+	private JTextField nameC;
+	private JTextField plateC;
+	private JTextField makeC;
+	private JTextField modelC;
+	
+	private JTextField insuranceC;
+	private JTextField policyC;
+	private JTextField daysC;
+	private JTextField amountC;
+	
 
 	// splash screen click anywhere button 
 	private JButton click;
@@ -231,7 +258,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         {"Q","W","E","R","T","Y","U","I","O","P"}, 
         {"A","S","D","F","G","H","J","K","L"},
         {"Z","X","C","V","B","N","M","@","."},
-        {"@yorku.ca", "@gmail.com","@yahoo.com", " ", "Enter","Delete"},
+        { " ", "Enter","Delete"},
            };
     
     // used for any numeric keyboard.
@@ -241,8 +268,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         {"1","2","3"},
         {"4","5","6",}, 
         {"7","8","9"},
-        {"0",},
-        { "Enter","Delete" }
+        {"<<","0","<"},
            };
     
     
@@ -251,8 +277,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         {"1","2","3"},
         {"4","5","6",}, 
         {"7","8","9"},
-        {"0",},
-        { "Enter","Delete" }
+        {"<<","0","<"},
            };
 
     
@@ -261,7 +286,8 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         super(new BorderLayout());
         
         try {
-        	UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel");
+        	UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaSimple2DLookAndFeel");
+        	SyntheticaLookAndFeel.setFont("Bernard MT Condensed", 24);
         } catch (Exception e) {}
         
     	JButton alaki = new JButton("?");
@@ -276,38 +302,36 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         swap3B = new JButton("Back");
         swap3N = new JButton("Next");
         
-        swap4B = new JButton("back");
-        swap4F = new JButton("finish");
+        swap4B = new JButton("Back");
+        swap4F = new JButton("Finish");
         
         
-        swap5B = new JButton("back");
+        swap5B = new JButton("Back");
         swap5N = new JButton("Next");
 
         
         
-        edit1 = new JButton("edit");
-        edit2 = new JButton("edit");
-        edit3 = new JButton("edit");
+        edit1 = new JButton("Edit");
+        edit2 = new JButton("Edit");
+        edit3 = new JButton("Edit");
 
 
         
         // student place holder is being assigned. with given font 
-        studentPlaceHolder = new JLabel("student number: ");
-        studentPlaceHolder.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+        studentPlaceHolder = new JLabel("Student Number: ");
+//        studentPlaceHolder.setFont(new Font("Sans-Serif", Font.BOLD, 12));
         
         // student place holder on confirmation panel  is being assigned. with given font 
-        studentPlaceHolderC = new JLabel("your student #:");
-        studentPlaceHolderC.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+        studentPlaceHolderC = new JLabel("Your student #:");
 
         
 
         // pin place holder is being assigned. with given font 
-		pinPlaceHolder = new JLabel("your pin number:");
-		pinPlaceHolder.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+		pinPlaceHolder = new JLabel("Your Pin Number:");
+//		pinPlaceHolder.setFont(new Font("Sans-Serif", Font.BOLD, 12));
 		
         // pin place holder on confirmation panel is being assigned. with given font 
-		pinPlaceHolderC = new JLabel("your pin is:");
-		pinPlaceHolderC.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+		namePlaceHolderC = new JLabel("Your name is:");
 
 		
 		
@@ -321,7 +345,6 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 		
         //  email place holder on confirmation panel is being assigned. with given font 
 		emailPlaceHolderC = new JLabel("your email is:");
-		emailPlaceHolderC.setFont(new Font("Sans-Serif", Font.BOLD, 12));
 		
 		// title for confirmation panel 
 		confirmLabel = new JLabel("Confirmation Page");
@@ -350,10 +373,10 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 	      JPanel panelPin  = new JPanel();
 
 	
-	      swap1N.setPreferredSize(new Dimension(500,45));
+	      swap1N.setPreferredSize(new Dimension(400,45));
 
-	      firstPanel.add(sN);
-
+			sN.add(swap1N);
+			sN.setBorder(BorderFactory.createEmptyBorder(0,0,30, 0));
 
 		// assigning text fields for student , pin , email (* we should make it disabled )
 		student = new JTextField("");
@@ -362,25 +385,23 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 
 		// assigning text fields for student , pin , email on confirmation panel   (* we should make it disabled )
 		studentC = new JTextField("");
-		pinC = new JTextField("");
+		nameC = new JTextField("");
 		emailC = new JTextField("");
 //        sI.setLayout(new GridLayout(1, 2));
 		panelPin.add(pinPlaceHolder);
-		pin.setPreferredSize(new Dimension(400,50));
+		pin.setPreferredSize(new Dimension(300,50));
 		panelPin.add(pin);
-		sN.add(swap1N);
 		
-		sN.setBorder(BorderFactory.createEmptyBorder(10,10,20, 10));
 
 
         panelA.add(studentPlaceHolder);
         panelA.add(student);
         
-//		sI.add(studentPlaceHolder);
-		student.setPreferredSize(new Dimension(400,50));
-		alaki.setPreferredSize(new Dimension(50,40));
+		student.setPreferredSize(new Dimension(300,50));
 		sI.add(alaki);
 
+		panelA.setBorder(BorderFactory.createEmptyBorder(0,0,60, 150));
+		panelPin.setBorder(BorderFactory.createEmptyBorder(0,0,60, 150));
 		firstPanel.add(panelA);
 		firstPanel.add(panelPin);
 
@@ -582,6 +603,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         
         sN.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+	      firstPanel.add(sN);
 
         
 	   
@@ -609,7 +631,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         
         
         model.setPreferredSize(new Dimension(400,50));
-        modelPanel.setBorder(BorderFactory.createEmptyBorder(0, 150, 20, 0));
+        modelPanel.setBorder(BorderFactory.createEmptyBorder(0, 110, 20, 0));
 
         modelPanel.add(modelPlaceHolder,BorderLayout.WEST);
         modelPanel.add(model,BorderLayout.EAST);
@@ -622,7 +644,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 
         
         plate.setPreferredSize(new Dimension(400,50));
-        platePanel.setBorder(BorderFactory.createEmptyBorder(0, 150, 20, 0));
+        platePanel.setBorder(BorderFactory.createEmptyBorder(0, 100, 20, 0));
 
         platePanel.add(platePlaceHolderC);
         platePanel.add(plate);
@@ -633,7 +655,10 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         
 
 
-        String[] options = { "Select the Model of your car", "Ford", "Toyota", "Hyundai", "Chevrolet", "Honda", "Dodge", "Ram"};
+        String[] options = { "-----Select The Model of Your Car-----",  "Ford", "Toyota", "Hyundai", "Chevrolet", "Honda", "Dodge", 
+        															 	"Ram", "Nissan","Kia","Mazda","GMC","VW","Jeep","Subaru",
+        															 	"Mercedes-Benz","BMW","Chrysler","Misubishi","Audi","Acura",
+        															 	 "Lexus", "Buick","Infiniti","Cadilliak","Misubishi"};
         make = new JComboBox(options); 
         
         make.setPreferredSize(new Dimension(600,50));
@@ -677,6 +702,21 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         }
     
       
+        swap3N.setPreferredSize(new Dimension(350,50));
+        swap3B.setPreferredSize(new Dimension(350,50));
+        JPanel thirdNB = new JPanel();
+        JPanel emailPlace = new JPanel();
+        thirdNB.add(swap3B);
+        thirdNB.add(swap3N);
+        thirdPanel.add(thirdNB);
+        email.setPreferredSize(new Dimension(400,50));
+        emailPlace.setBorder(BorderFactory.createEmptyBorder(98, 40, 80, 80));
+
+        emailPlace.add(emailPlaceHolder);
+        emailPlace.add(email);
+
+        thirdPanel.add(emailPlace);
+        
       // keyboard for email
       JPanel[] panel3 = new JPanel[9];
     for (int row = 0; row < alphaNumKey.length; row++) {
@@ -691,8 +731,8 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
             button3[row][column].setPreferredSize(new Dimension(100,50));
             button3[row][column].addActionListener(this);
             
-            if(  button3[row][column] == button3[6][3] || button3[row][column] == button3[6][4] ||  button3[row][column] == button3[6][5] ){
-                button3[row][column].setPreferredSize(new Dimension(200,50));
+            if(  button3[row][column] == button3[6][3] || button3[row][column] == button3[6][0] ||  button3[row][column] == button3[6][1] ){
+                button3[row][column].setPreferredSize(new Dimension(300,50));
                 	}
             panel3[row].add(button3[row][column]);
         }
@@ -715,15 +755,14 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 	
 
 	
-	JPanel policyLablePanel = new JPanel();
-	policyLablePanel.setBorder(BorderFactory.createEmptyBorder(10, 435, 0, 10));
+
 
     JPanel insurancePanel = new JPanel();
     insurancePanel.setBorder(BorderFactory.createEmptyBorder(0, 100, 10, 0));
 
     
     JPanel  ploicyPanel = new JPanel();
-    ploicyPanel.setBorder(BorderFactory.createEmptyBorder(0, 150, 20, 0));
+    ploicyPanel.setBorder(BorderFactory.createEmptyBorder(50, 120, 45, 0));
 
     
 	swapPanel5.add(swap5B);
@@ -735,14 +774,11 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
     
     
     insurancePanel.setPreferredSize(new Dimension(500,50));
-    insurancePanel.setLayout((new GridLayout(1, 1)));
-    policyPlaceHolder.setPreferredSize(new Dimension(400,50));
     policy.setPreferredSize(new Dimension(400,50));
 
     
-	ploicyPanel.setLayout(new GridLayout(1, 1));
 	
-	policyLablePanel.add(policyPlaceHolder);
+	ploicyPanel.add(policyPlaceHolder);
 	ploicyPanel.add(policy);
 
 	
@@ -769,14 +805,13 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 
 
     insurance = new JComboBox(InsuranceOptions); 
-    insurance.setPreferredSize(new Dimension(400,30));
+    insurance.setPreferredSize(new Dimension(400,45));
     insurancePanel.add(insurance);
     
     
-    fifithPanel.add(swapPanel5);
-    fifithPanel.add(insurancePanel);  
-   fifithPanel.add(policyLablePanel);
-    fifithPanel.add(ploicyPanel);
+    fifthPanel.add(swapPanel5);
+    fifthPanel.add(insurancePanel);  
+    fifthPanel.add(ploicyPanel);
     
     
     // keyboard for email
@@ -787,94 +822,93 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
       for (int column = 0; column < alphaNumKey[row].length; column++) {
     	  
           button4[row][column] = new JButton(alphaNumKey[row][column]);
-          button4[row][column].putClientProperty("column", column);
           button4[row][column].putClientProperty("row", row);
           button4[row][column].putClientProperty("key", alphaNumKey[row][column]);
           button4[row][column].setPreferredSize(new Dimension(100,50));
           button4[row][column].addActionListener(this);
           
-          if(  button4[row][column] == button4[6][3] || button4[row][column] == button4[6][4] ||  button4[row][column] == button4[6][5] ){
+          if(  button4[row][column] == button4[6][0] || button4[row][column] == button4[6][1] ||  button4[row][column] == button4[6][2] ){
               button4[row][column].setPreferredSize(new Dimension(200,50));
               	}
           panel4[row].add(button4[row][column]);
       }
   
       
-      fifithPanel.add(panel4[row]);
+      fifthPanel.add(panel4[row]);
       
   }
       
-  fifithPanel.setBorder((BorderFactory.createEmptyBorder(40, 10, 10, 10)));
+  fifthPanel.setBorder((BorderFactory.createEmptyBorder(40, 10, 10, 10)));
     
 
     
     
     /**splash starts  here*/
-    spalsh.setBackground(Color.white);
+    splash.setBackground(Color.white);
 
     
     // Building the splash screen
     JLabel title = new JLabel
       ("Welcome To Parking-Permit-Kiosk click anywhere  to start", JLabel.CENTER);
 
-    
     // can be added afterward not used for now , assigned font as well 
-    JLabel byWho = new JLabel
-    	      ("by Shayan , Rob , Dave", JLabel.CENTER);
-    title.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+
     Color oraRed = new Color(156, 20, 20,  255);
-    spalsh.setBorder(BorderFactory.createLineBorder(oraRed, 10));
+    splash.setBorder(BorderFactory.createLineBorder(oraRed, 10));
     
     // assigning the click anywhere panel.
-     click = new JButton("Welcome To Parking-Permit-Kiosk\n Click anywhere to start");
+     click = new JButton("Welcome To Parking-Permit-Kiosk Click anywhere to start");
+
      click.setFont(new Font("Sans-Serif", Font.BOLD, 30));
      
      
      // making the button as big the screen lol.( feels like click anywhere type )
     click.setPreferredSize(new Dimension(1180,1180));
-    spalsh.add(click);
-    spalsh.setLayout(new GridLayout(1, 1));
+    splash.add(click);
+    splash.setLayout(new GridLayout(1, 1));
     
     /**splash ends here*/
-    
-
-	
-		
 		
 		/** first panel adding components */ 
-		firstPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 10, 10));
-       
-		firstPanel.setLayout(new GridLayout(11, 11));
-
-
-        
-		
-
-        
+		firstPanel.setBorder(BorderFactory.createEmptyBorder(100, 10, 10, 10));
+		firstPanel.setLayout(new GridLayout(8, 8));
+		     
 		/** second panel adding components */ 
         secondPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 10, 10));
      
-        
-
 		/** third panel adding components */ 
         thirdPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 10, 10));
-        panel3[0].setLayout(new GridLayout(1, 1));
-        panel3[1].setLayout(new GridLayout(1, 1));
-        thirdPanel.setLayout(new GridLayout(11, 11));
 
-        panel3[0].add(swap3B);
-        panel3[1].add(emailPlaceHolder);
-        panel3[1].add(email);
-        swap3N.setPreferredSize(new Dimension(75,200));
-        swap3B.setPreferredSize(new Dimension(75,200));
-        panel3[0].add(swap3N);
+
         
 
         
 		/** forth  panel or confirm panel  adding components */ 
+        
+
+        
+        forthPanel.setLayout(new GridLayout(6, 1));
+        
+        
+        
+    	JPanel platePanel1 = new JPanel();
+    	
+    	
+    	plateLabelC = new JLabel("Your Plate Number is ");
+    	plateC = new JTextField("");
+    	plateC.setPreferredSize(new Dimension(200,34));
+    
+    	platePanel1.add(plateLabelC);
+    	platePanel1.add(plateC);
+    	
+        namePanel.add(namePlaceHolderC);
+        nameC = new JTextField("");
+        
+     
+
         studentC.setPreferredSize(new Dimension(200,34));
         emailC.setPreferredSize(new Dimension(200,34));
-        pinC.setPreferredSize(new Dimension(200,34));
+        nameC.setPreferredSize(new Dimension(200,34));
         
         // adding title label to confirm panel which then will  be added to forth panel
         confirmPanel.add(confirmLabel);
@@ -890,16 +924,18 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         emailPanel.add(edit2);
 
         // adding pin label and text field to email panel which then will be added to forth panel
-        pinPanel.add(pinPlaceHolderC);
-        pinPanel.add(pinC);
+        namePanel.add(namePlaceHolderC);
+        pinPanel.add(nameC);
         pinPanel.add(edit3);
 
         // adding the inner panel to forth panel
         forthPanel.add(confirmPanel);
         forthPanel.add(studentPanel);
         forthPanel.add(emailPanel);
-        forthPanel.add(pinPanel);
-        
+        namePanel.add(nameC);
+        forthPanel.add(namePanel);
+        forthPanel.add(platePanel1);
+        forthPanel.add(infoPanel);        
         // resizing the back and finish button
         swap4B.setPreferredSize(new Dimension(400,80));
         swap4F.setPreferredSize(new Dimension(400,80));
@@ -912,8 +948,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         infoPanel.add(buttonPanel);
        
         infoPanel.setLayout(new GridLayout(1, 1));
-        forthPanel.add(infoPanel);
-        forthPanel.setLayout(new GridLayout(5, 1));
+      
 
         
         
@@ -955,12 +990,11 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         back.addActionListener(this);
 
 
-
         /** Listens to the buttons ends here . */
 
 
-        // making the spalsh panel to be the starting point 
-        add(spalsh);
+        // making the splash panel to be the starting point 
+        add(splash);
 
     }
     
@@ -1050,25 +1084,25 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 		case 2: monthInStr =  "Feb";
 				break;
 		case 3: monthInStr =  "Mar";
-		break;
+			break;
 		case 4: monthInStr =  "Apr";
-		break;
+			break;
 		case 5: monthInStr =  "May";
-		break;
+			break;
 		case 6: monthInStr =  "Jun";
-		break;
+			break;
 		case 7: monthInStr =  "Jul";
-		break;
+			break;
 		case 8: monthInStr =  "Aug";
-		break;
+			break;
 		case 9: monthInStr =  "Sep";
-		break;
+			break;
 		case 10: monthInStr =  "Oct";
-		break;
+			break;
 		case 11: monthInStr =  "Nov";
-		break;
+			break;
 		case 12: monthInStr =  "Dec";
-		break;
+			break;
 		}
 		
 		return monthInStr;
@@ -1120,13 +1154,6 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 		return 0;
 	}
 	
-	/**
-	 * Get a diff between two dates
-	 * @param date1 the oldest date
-	 * @param date2 the newest date
-	 * @param timeUnit the unit in which you want the diff
-	 * @return the diff value, in the provided unit
-	 */
 	public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
 	    long diffInMillies = date2.getTime() - date1.getTime();
 	    return  timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
@@ -1155,11 +1182,11 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         for (Component component : getComponents())
         	
         	
-        if (spalsh == component) {
+        if (splash == component) {
         		 
         		 
            if(e.getSource() == click){
-                     remove(spalsh);
+                     remove(splash);
                      add(firstPanel);
              		}
         	 }
@@ -1169,22 +1196,22 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         		 // example for giving the customer meaningful warning  
         		 if((e.getSource() == swap1N || e.getSource() == button1[4][0]) && studentNum.length() != 9 ){
         			
-         			   JOptionPane.showMessageDialog(null, "Student Number is 9 digits, please check agian");
+         			   JOptionPane.showMessageDialog(null, "Student Number is not 9 digits, please check agian");
 
         		 }
         			 
                  
-            	if((e.getSource() == swap1N || e.getSource() == button1[4][0]) )
+            	if(e.getSource() == swap1N)
             	{
             		
             			if(pinMatched(studentNum, pinNum) == true)
             			{
-                    remove(firstPanel);
-                    add(secondPanel);
+            				remove(firstPanel);
+            				add(secondPanel);
             			}
-            			else{
+            			else if (studentNum.length() == 9){
             				if(hasID(studentNum) == false)
-              			   JOptionPane.showMessageDialog(null, 
+            					JOptionPane.showMessageDialog(null, 
               					   "your student number does not match our records");
             			
             				else if (pinMatched(studentNum, pinNum) == false){
@@ -1201,18 +1228,19 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
                
             	else{
             		
-            		
-            		
             		if(isFocusID){
+            		
                         studentNum += info;
 
-            			
-                     if(info.compareTo("Delete") == 0 ){
+            			if(info.compareTo("<<") == 0 ){
+            				studentNum = "";
+            			}
+                     if(info.compareTo("<") == 0 ){
                     	 
-                     	studentNum = studentNum.substring(0, studentNum.length() - 6);
+                     	studentNum = studentNum.substring(0, studentNum.length() - 1);
                      }
                      
-                     if(info.compareTo("Delete") == 0 && studentNum.length() != 0){
+                     if(info.compareTo("<") == 0 && studentNum.length() != 0){
                     	 alaki = studentNum.substring(student.getCaretPosition() , studentNum.length() );
                     	 alakz = studentNum.substring(0, student.getCaretPosition() - 1);
                      	studentNum = alakz + alaki;
@@ -1220,7 +1248,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
                      
          			student.setText(studentNum);
          			studentC.setText(studentNum);
-         			
+         		
           			System.out.println("::::::::Student Number::::::::");
           			System.out.println("Student Numer matches? "+hasID(studentNum)); 
           			System.out.println(studentNum);
@@ -1228,18 +1256,21 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
             	}          		
             		if(isFocusPin == true){
                 		pinNum += info;
-            	           if(info.compareTo("Delete") == 0 ){
-                         	  pinNum = pinNum.substring(0, pinNum.length() - 6);
+                		if(info.compareTo("<<") == 0 ){
+            				pinNum = "";
+            			}
+            	           if(info.compareTo("<") == 0 ){
+                         	  pinNum = pinNum.substring(0, pinNum.length() - 1);
                            }
                            
-                           if(info.compareTo("Delete") == 0 && pinNum.length() != 0){
+                           if(info.compareTo("<") == 0 && pinNum.length() != 0){
                         	   String firstPart = "";
                         	   String secondPart = "";
                         	   firstPart = pinNum.substring(pin.getCaretPosition() , pinNum.length() );
                         	   secondPart = pinNum.substring(0, pin.getCaretPosition() - 1);
                         	   pinNum = secondPart + firstPart;                           } 
                            pin.setText(pinNum);
-               			pinC.setText(pinNum);
+               			nameC.setText(pinNum);
                			System.out.println("::::::::Pin Number::::::::");
                			System.out.println(pinNum);
 	
@@ -1247,10 +1278,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
             	} 
         	 }
         
-        
-        
-        
-        
+      
         
         
         	 else if (secondPanel == component) {
@@ -1258,7 +1286,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
    		 
             if(e.getSource() == swap2N){
                       remove(secondPanel);
-                      add(fifithPanel);
+                      add(fifthPanel);
                       isFocusModel = false;
                       isFocusPlate = false;
                       
@@ -1314,15 +1342,15 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 
          	 }
         
-             else if(fifithPanel == component) {
+             else if(fifthPanel == component) {
             	 
             	  	if(e.getSource() == swap5N || e.getSource() == button4[6][4]  ){
-            	  		remove(fifithPanel);
-                        add(date);
+            	  		remove(fifthPanel);
+                        add(thirdPanel);
                  	}
             	  	
             		else if(e.getSource() == swap5B){
-                		remove(fifithPanel);
+                		remove(fifthPanel);
                         add(secondPanel);
 
                 	}
@@ -1357,7 +1385,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
             	 if(e.getSource() == back){
             		 
             		 remove(date);
-            		 add(fifithPanel);
+            		 add(thirdPanel);
             		 
             	 }
             	 
@@ -1402,7 +1430,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
          			endDate.setDate(selectedEndDay);
          			
          			remove(date);
-         			add(thirdPanel);
+         			add(forthPanel);
          			
          			if(startDate.after(endDate) || endDate.before(startDate)) {
          				JOptionPane.showMessageDialog(null, "Wrong date order, please check again");
@@ -1419,6 +1447,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
          		else if(e.getSource() == checkOut) {
          			Date startDate = new Date();
          			Date endDate = new Date();
+         			
          			// get info from start comboboxes
          			int selectedStartYear = Integer.parseInt((String) startYearBox.getSelectedItem());
          			int selectedStartMonth = convertMonthDigit((String) startMonthBox.getSelectedItem());
@@ -1464,12 +1493,12 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
                   
             		
             	   remove(thirdPanel);
-                   add(forthPanel);
+                   add(date);
 
             	}
             	else if(e.getSource() == swap3B){
             		remove(thirdPanel);
-                    add(date);
+                    add(fifthPanel);
 
             	}
             	else{
@@ -1494,6 +1523,18 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
             	}
             else{
             	
+
+
+                System.out.print(getName(studentNum));
+                nameC.setText(getName(studentNum));
+            	if(plateNum.isEmpty())
+            	{
+            		plateC.setText("Not Provied");
+            	}
+            	else{
+            	plateC.setText(plateNum);
+            	}
+            	
             	if(e.getSource() == swap4F ){
             		
             	//Rob I am resting all the string  for the next customer. 
@@ -1511,7 +1552,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
            		      
            			   JOptionPane.showMessageDialog(null, "You Just Purchased it");
            			   remove(forthPanel);
-           			   add(spalsh);
+           			   add(splash);
            		
              	}
             	
@@ -1533,7 +1574,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
             	
              	else if(e.getSource() == swap4B){
              		remove(forthPanel);
-                     add(thirdPanel);
+                     add(date);
 
              	}
             	
@@ -1594,6 +1635,27 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 		   }
 	   }
 	   return hasId;
+   }
+   
+   
+   private static String getName(String studentNum){
+	   
+	   ArrayList<String> students = readStudent();
+	   
+	   String[] student = new String[5];
+	   String firstName = "";
+	   String lastName = "";
+	   String fullName = "";
+	   for(String str : students) {
+		   if(str.contains(studentNum)) {
+			   student = str.split(",");
+			   firstName = student[2];
+			   lastName = student[3];
+		   }
+	   }
+	   fullName = firstName + lastName;
+	   return fullName;
+	   
    }
    
    // check if students.txt contains user input pin and pin matches correspond student id

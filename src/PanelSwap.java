@@ -99,7 +99,8 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
     
     // Confirmation Confirmation 
     JPanel forthPanel = new JPanel();
-    JPanel namePanel = new JPanel();
+    JPanel forthMainPanel = new JPanel();
+    
 
     
     JPanel fifthPanel = new JPanel();
@@ -112,7 +113,17 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
     JPanel confirmPanel = new JPanel();
     JPanel studentPanel = new JPanel();
     JPanel emailPanel = new JPanel();
-    JPanel pinPanel = new JPanel();
+    JPanel namePanel = new JPanel();
+	JPanel platePanel1 = new JPanel();
+	
+    JPanel carMakePanelC = new JPanel();
+    JPanel carModelPanelC = new JPanel();
+    JPanel companyPanelC = new JPanel();
+    JPanel policyPanelC = new JPanel();
+    JPanel amountPanelC = new JPanel();
+    JPanel daysPanelC = new JPanel();
+    
+    
 
     JPanel buttonPanel = new JPanel(); 
     JPanel infoPanel = new JPanel();
@@ -539,8 +550,6 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 		dateNBPanel.add(next);
 		dateNBPanel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 10));
 
-
-		
 		
 
 		currentDatePanel.add(todayLabel);
@@ -655,7 +664,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         
 
 
-        String[] options = { "-----Select The Model of Your Car-----",  "Ford", "Toyota", "Hyundai", "Chevrolet", "Honda", "Dodge", 
+        String[] options = { "-----Select The Model of Your Car------",  "Ford", "Toyota", "Hyundai", "Chevrolet", "Honda", "Dodge", 
         															 	"Ram", "Nissan","Kia","Mazda","GMC","VW","Jeep","Subaru",
         															 	"Mercedes-Benz","BMW","Chrysler","Misubishi","Audi","Acura",
         															 	 "Lexus", "Buick","Infiniti","Cadilliak","Misubishi"};
@@ -887,16 +896,41 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         
 
         
-        forthPanel.setLayout(new GridLayout(6, 1));
+        forthPanel.setLayout(new BorderLayout());
+        forthMainPanel.setLayout(new GridLayout(5,2));
         
         
         
-    	JPanel platePanel1 = new JPanel();
+
     	
     	
     	plateLabelC = new JLabel("Your Plate Number is ");
     	plateC = new JTextField("");
     	plateC.setPreferredSize(new Dimension(200,34));
+    	
+    	makeLabelC = new JLabel("Make: ");
+    	makeC = new JTextField("");
+    	makeC.setPreferredSize(new Dimension(200,34));
+    	
+    	modelLabelC = new JLabel("Model: ");
+    	modelC = new JTextField("");
+    	modelC.setPreferredSize(new Dimension(200,34));
+    	
+    	insuranceLabelC = new JLabel("Insurance Company: ");
+    	insuranceC = new JTextField("");
+    	insuranceC.setPreferredSize(new Dimension(200,34));
+    	
+    	policyLabelC = new JLabel("Policy Number:  ");
+    	policyC = new JTextField("");
+    	policyC.setPreferredSize(new Dimension(200,34));
+    	
+    	amountLabelC = new JLabel("Amount: $");
+    	amountC = new JTextField("");
+    	amountC.setPreferredSize(new Dimension(200,34));
+    	
+    	daysLabelC = new JLabel("Days: ");
+    	daysC = new JTextField("");
+    	daysC.setPreferredSize(new Dimension(200,34));
     
     	platePanel1.add(plateLabelC);
     	platePanel1.add(plateC);
@@ -925,17 +959,44 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
 
         // adding pin label and text field to email panel which then will be added to forth panel
         namePanel.add(namePlaceHolderC);
-        pinPanel.add(nameC);
-        pinPanel.add(edit3);
+        namePanel.add(nameC);
+        
+        carMakePanelC.add(makeLabelC);
+        carMakePanelC.add(makeC);
+        
+        carModelPanelC.add(modelLabelC);
+        carModelPanelC.add(modelC);
+        
+        companyPanelC.add(insuranceLabelC);
+        companyPanelC.add(insuranceC);
+        
+        policyPanelC.add(policyLabelC);
+        policyPanelC.add(policyC);
+        
+        amountPanelC.add(amountLabelC);
+        amountPanelC.add(amountC);
+        
+        daysPanelC.add(daysLabelC);
+        daysPanelC.add(daysC);
 
         // adding the inner panel to forth panel
-        forthPanel.add(confirmPanel);
-        forthPanel.add(studentPanel);
-        forthPanel.add(emailPanel);
-        namePanel.add(nameC);
-        forthPanel.add(namePanel);
-        forthPanel.add(platePanel1);
-        forthPanel.add(infoPanel);        
+      
+        forthMainPanel.add(studentPanel);
+        forthMainPanel.add(emailPanel);
+        
+        forthMainPanel.add(namePanel);
+        forthMainPanel.add(platePanel1);
+        
+        forthMainPanel.add(carMakePanelC);
+        forthMainPanel.add(carModelPanelC);
+        forthMainPanel.add(companyPanelC);
+        forthMainPanel.add(policyPanelC);
+        forthMainPanel.add(amountPanelC);
+        forthMainPanel.add(daysPanelC);
+        
+        forthPanel.add(confirmPanel, BorderLayout.NORTH);
+        forthPanel.add(forthMainPanel, BorderLayout.CENTER);
+        forthPanel.add(infoPanel, BorderLayout.SOUTH);        
         // resizing the back and finish button
         swap4B.setPreferredSize(new Dimension(400,80));
         swap4F.setPreferredSize(new Dimension(400,80));
@@ -948,10 +1009,6 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
         infoPanel.add(buttonPanel);
        
         infoPanel.setLayout(new GridLayout(1, 1));
-      
-
-        
-        
         
         /** Listens to the buttons start here . */
         click.addActionListener(this);
@@ -1532,7 +1589,7 @@ public class PanelSwap extends JPanel implements ActionListener,FocusListener {
             		plateC.setText("Not Provied");
             	}
             	else{
-            	plateC.setText(plateNum);
+            		plateC.setText(plateNum);
             	}
             	
             	if(e.getSource() == swap4F ){

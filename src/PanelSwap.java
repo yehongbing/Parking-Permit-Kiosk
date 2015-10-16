@@ -1660,11 +1660,14 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 	model.setText("");
 	plate.setText("");
 	pin.setText("");
+	make.setSelectedIndex(0);
+	insurance.setSelectedIndex(0);
 	
 	
 	
 	studentNum = "";
 	pinNum = "";
+	tempPin = "";
 	emailAd = "";
 	info = "";	
 	policyNum = "";

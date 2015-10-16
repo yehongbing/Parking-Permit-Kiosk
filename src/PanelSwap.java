@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.synth.SynthLookAndFeel;
@@ -58,6 +59,9 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 	int daysCount;
 	double amount;
+	private String tapPlaceHolder = "Tap Here to Enter";
+	private String tapPlaceHolder1 = "Tap Here to Enter (Optional)";
+	private String tempPin = "";
 
 	private JLabel todayLabel;
 	private JLabel currentDateLabel;
@@ -132,6 +136,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 	private boolean isFocusPlate;
 	private boolean isFocusModel;
 	private boolean isFocusEmail;
+	private boolean isFocusPolicy;
 
 	/** end of inner panels for within Confirmation panel */
 
@@ -157,7 +162,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 	// text fields for student number , pin number , and email address( in order
 	// ).
 	private JTextField student;
-	private JPasswordField pin;
+	private JTextField pin;
 	private JTextField email;
 
 	private JTextField studentC;
@@ -264,6 +269,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 			SyntheticaLookAndFeel.setFont("Bernard MT Condensed", 24);
 		} catch (Exception e) {
 		}
+		
 
 		JButton alaki = new JButton("?");
 
@@ -305,7 +311,8 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 		// pin place holder on confirmation panel is being assigned. with given
 		// font
-		namePlaceHolderC = new JLabel("Your name is:");
+		namePlaceHolderC = new JLabel("Name:");
+		namePlaceHolderC.setPreferredSize(new Dimension(70,50));
 
 		// email place holder is being assigned. with given font
 		emailPlaceHolder = new JLabel("Enter your email:");
@@ -313,11 +320,13 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 		// email place holder on confirmation panel is being assigned. with
 		// given font
-		emailPlaceHolderC = new JLabel("your email is:");
+		emailPlaceHolderC = new JLabel("Email:");
+		emailPlaceHolderC.setPreferredSize(new Dimension(65,50));
 
 		// title for confirmation panel
 		confirmLabel = new JLabel("Confirmation Page");
-		confirmLabel.setFont(new Font("Sans-Serif", Font.BOLD, 16));
+		confirmLabel.setPreferredSize(new Dimension(200,50));
+		confirmLabel.setFont(new Font("Sans-Serif", Font.BOLD, 20));
 
 		modelPlaceHolder = new JLabel("Model:");
 		modelPlaceHolder.setFont(new Font("Sans-Serif", Font.BOLD, 12));
@@ -325,12 +334,15 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		platePlaceHolderC = new JLabel("Plate Number");
 		platePlaceHolderC.setFont(new Font("Sans-Serif", Font.BOLD, 12));
 
-		model = new JTextField("");
-		plate = new JTextField("");
+		model = new JTextField(tapPlaceHolder1);
+		model.setForeground(Color.gray);
+		plate = new JTextField(tapPlaceHolder1);
+		plate.setForeground(Color.gray);
 
 		policyPlaceHolder = new JLabel("Policy Number: ");
 		policyPlaceHolder.setFont(new Font("Sans-Serif", Font.BOLD, 12));
-		policy = new JTextField("");
+		policy = new JTextField(tapPlaceHolder1);
+		policy.setForeground(Color.gray);
 
 		JPanel panelA = new JPanel();
 		JPanel panelPin = new JPanel();
@@ -342,9 +354,12 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 		// assigning text fields for student , pin , email (* we should make it
 		// disabled )
-		student = new JTextField("");
-		pin = new JPasswordField("");
-		email = new JTextField("");
+		student = new JTextField(tapPlaceHolder);
+		student.setForeground(Color.gray);
+		pin = new JTextField(tapPlaceHolder);
+		pin.setForeground(Color.gray);
+		email = new JTextField(tapPlaceHolder1);
+		email.setForeground(Color.gray);
 
 		// assigning text fields for student , pin , email on confirmation panel
 		// (* we should make it disabled )
@@ -362,6 +377,14 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		student.setPreferredSize(new Dimension(300, 50));
 		sI.add(alaki);
 
+		JLabel loginT = new JLabel("Please Log-In");
+		loginT.setPreferredSize(new Dimension(170,50));
+		loginT.setFont(new Font("Sans-serif", Font.BOLD, 20 ));
+		JPanel title = new JPanel();
+		title.setPreferredSize(new Dimension(800,40));
+		title.add(loginT);
+		firstPanel.add(title);
+		
 		panelA.setBorder(BorderFactory.createEmptyBorder(0, 0, 60, 150));
 		panelPin.setBorder(BorderFactory.createEmptyBorder(0, 0, 60, 150));
 		firstPanel.add(panelA);
@@ -382,11 +405,11 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		// components in the expire panel and the initial value of comoboxes
 		startDatePanel = new JPanel();
 		startDatePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 20,
-				10));
+				100));
 
 		endDatePanel = new JPanel();
 		endDatePanel
-				.setBorder(BorderFactory.createEmptyBorder(10, 100, 20, 10));
+				.setBorder(BorderFactory.createEmptyBorder(10, 100, 20, 100));
 
 		daysCountLabel = new JLabel("						Days: ");
 		daysCountLabel.setFont(new Font("Sans-Serif", Font.BOLD, 12));
@@ -477,19 +500,18 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 		daysPanel.add(daysCountLabel);
 		daysPanel.add(daysCountDisplay);
-		daysPanel.setBorder(BorderFactory.createEmptyBorder(10, 170, 10, 10));
+		daysPanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 60));
 
 		JPanel dateNBPanel = new JPanel();
 		dateNBPanel.add(back);
 		dateNBPanel.add(next);
-		dateNBPanel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 10));
+		dateNBPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		currentDatePanel.add(todayLabel);
 		currentDatePanel.add(currentDateLabel);
-		currentDatePanel.setBorder(BorderFactory.createEmptyBorder(10, 130, 10,
-				10));
+		currentDatePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		amountPanel.setBorder(BorderFactory.createEmptyBorder(10, 130, 10, 10));
+		amountPanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 		amountPanel.add(amountLabel);
 		amountPanel.add(amountDisplay);
 
@@ -502,7 +524,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		date.add(amountPanel);
 
 		clalcute.add(checkOut);
-		clalcute.setBorder(BorderFactory.createEmptyBorder(10, 180, 10, 10));
+		clalcute.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 50));
 
 		date.add(clalcute);
 
@@ -569,6 +591,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 		platePanel.add(platePlaceHolderC);
 		platePanel.add(plate);
+		
 
 		String[] options = { "-----Select The Make of Your Car------", "Ford",
 				"Toyota", "Hyundai", "Chevrolet", "Honda", "Dodge", "Ram",
@@ -580,7 +603,16 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		make.setPreferredSize(new Dimension(600, 50));
 		makePanel.setBorder(BorderFactory.createEmptyBorder(10, 100, 20, 10));
 		makePanel.add(make);
+		
+		JLabel vehicle = new JLabel("Vehicle Information");
+		vehicle.setPreferredSize(new Dimension(240,50));
+		vehicle.setFont(new Font("Sans-serif", Font.BOLD, 20 ));
+		JPanel title1 = new JPanel();
+		swapSecod.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+		title1.setPreferredSize(new Dimension(800,40));
+		title1.add(vehicle);
 
+		secondPanel.add(title1);
 		secondPanel.add(swapSecod);
 		secondPanel.add(makePanel);
 
@@ -615,10 +647,19 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 			secondPanel.add(panel2[row]);
 
 		}
+		
+		JLabel emailT = new JLabel("Email");
+		emailT.setPreferredSize(new Dimension(80,50));
+		emailT.setFont(new Font("Sans-serif", Font.BOLD, 20 ));
+		JPanel title2 = new JPanel();
+		title2.setPreferredSize(new Dimension(800,40));
+		title2.add(emailT);
+		thirdPanel.add(title2);
 
 		swap3N.setPreferredSize(new Dimension(350, 50));
 		swap3B.setPreferredSize(new Dimension(350, 50));
 		JPanel thirdNB = new JPanel();
+		thirdNB.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		JPanel emailPlace = new JPanel();
 		thirdNB.add(swap3B);
 		thirdNB.add(swap3N);
@@ -668,6 +709,14 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		JPanel insurancePanel = new JPanel();
 		insurancePanel
 				.setBorder(BorderFactory.createEmptyBorder(0, 100, 10, 0));
+		
+		JLabel insuranceT = new JLabel("Insurance Information");
+		insuranceT.setPreferredSize(new Dimension(250,50));
+		insuranceT.setFont(new Font("Sans-serif", Font.BOLD, 20 ));
+		JPanel title3 = new JPanel();
+		title3.setPreferredSize(new Dimension(800,40));
+		title3.add(insuranceT);
+		fifthPanel.add(title3);
 
 		JPanel ploicyPanel = new JPanel();
 		ploicyPanel.setBorder(BorderFactory.createEmptyBorder(50, 120, 45, 0));
@@ -729,26 +778,20 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 		}
 
-		fifthPanel.setBorder((BorderFactory.createEmptyBorder(40, 10, 10, 10)));
+		fifthPanel.setBorder((BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
 		/** splash starts here */
 		splash.setBackground(Color.white);
 
-		// Building the splash screen
-		JLabel title = new JLabel(
-				"Welcome To Parking-Permit-Kiosk click anywhere  to start",
-				JLabel.CENTER);
-
 		// can be added afterward not used for now , assigned font as well
 
 		Color oraRed = new Color(156, 20, 20, 255);
-		splash.setBorder(BorderFactory.createLineBorder(oraRed, 10));
+		splash.setBorder(BorderFactory.createLineBorder(oraRed, 2));
 
 		// assigning the click anywhere panel.
-		click = new JButton(
-				"Welcome To Parking-Permit-Kiosk Click anywhere to start");
 
-		click.setFont(new Font("Sans-Serif", Font.BOLD, 30));
+		Icon img = new ImageIcon("WelcomeScreen2.png");
+		click = new JButton(img);
 
 		// making the button as big the screen lol.( feels like click anywhere
 		// type )
@@ -759,48 +802,63 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		/** splash ends here */
 
 		/** first panel adding components */
-		firstPanel.setBorder(BorderFactory.createEmptyBorder(100, 10, 10, 10));
+		firstPanel.setBorder(BorderFactory.createEmptyBorder(30, 10, 10, 10));
 		firstPanel.setLayout(new GridLayout(8, 8));
 
 		/** second panel adding components */
-		secondPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 10, 10));
+		secondPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		/** third panel adding components */
-		thirdPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 10, 10));
+		thirdPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		/** forth panel or confirm panel adding components */
 		forthPanel.setLayout(new BorderLayout());
-		forthMainPanel.setLayout(new GridLayout(5, 2));
+		forthMainPanel.setLayout(new GridLayout(2, 5));
 
-		plateLabelC = new JLabel("Your Plate Number is ");
+		plateLabelC = new JLabel("Plate #:");
+		plateLabelC.setPreferredSize(new Dimension(80,50));
 		plateC = new JTextField("");
+		plateC.setEditable(false);
 		plateC.setPreferredSize(new Dimension(200, 34));
 
-		makeLabelC = new JLabel("Make: ");
+		makeLabelC = new JLabel("Make & Model:");
+		makeLabelC.setPreferredSize(new Dimension(170,50));
 		makeC = new JTextField("");
-		makeC.setPreferredSize(new Dimension(200, 34));
+		makeC.setEditable(false);
+		makeC.setPreferredSize(new Dimension(250, 50));
 
 		modelLabelC = new JLabel("Model: ");
 		modelC = new JTextField("");
+		modelC.setEditable(false);
 		modelC.setPreferredSize(new Dimension(200, 34));
 
-		insuranceLabelC = new JLabel("Insurance Company: ");
+		insuranceLabelC = new JLabel("Insurance:");
+		insuranceLabelC.setPreferredSize(new Dimension(120,50));
 		insuranceC = new JTextField("");
-		insuranceC.setPreferredSize(new Dimension(200, 34));
+		insuranceC.setFont(new Font("", Font.BOLD, 12));
+		insuranceC.setEditable(false);
+		insuranceC.setPreferredSize(new Dimension(250, 50));
 
-		policyLabelC = new JLabel("Policy Number:  ");
+		policyLabelC = new JLabel("Policy #:");
+		policyLabelC.setPreferredSize(new Dimension(100,50));
 		policyC = new JTextField("");
-		policyC.setPreferredSize(new Dimension(200, 34));
+		policyC.setEditable(false);
+		policyC.setPreferredSize(new Dimension(250, 50));
 
-		amountLabelC = new JLabel("Amount: $");
+		amountLabelC = new JLabel("Amount($):");
+		amountLabelC.setPreferredSize(new Dimension(120,50));
 		amountC = new JTextField("");
-		amountC.setPreferredSize(new Dimension(200, 34));
+		amountC.setEditable(false);
+		amountC.setPreferredSize(new Dimension(250, 50));
 
-		daysLabelC = new JLabel("Days: ");
+		daysLabelC = new JLabel("Days:");
+		daysLabelC.setPreferredSize(new Dimension(60,50));
 		daysC = new JTextField("");
-		daysC.setPreferredSize(new Dimension(200, 34));
+		daysC.setEditable(false);
+		daysC.setPreferredSize(new Dimension(250, 50));
 
 		platePanel1.add(plateLabelC);
+		plateC.setPreferredSize(new Dimension(250,50));
 		platePanel1.add(plateC);
 		platePanel1.add(editPlate);
 
@@ -814,21 +872,38 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		// adding title label to confirm panel which then will be added to forth
 		// panel
 		confirmPanel.add(confirmLabel);
+		
+		
+		JLabel empty1 = new JLabel();
+		empty1.setPreferredSize(new Dimension(60,10));
+		JLabel empty2 = new JLabel();
+		empty2.setPreferredSize(new Dimension(30,10));
+		JLabel empty3 = new JLabel();
+		empty3.setPreferredSize(new Dimension(40,10));
+		JLabel empty4 = new JLabel();
+		empty4.setPreferredSize(new Dimension(10,10));
+		JLabel empty = new JLabel();
+		empty.setPreferredSize(new Dimension(100,10));
 
 		// adding students label and text field to student panel which then will
 		// be added to forth panel
 		studentPanel.add(studentPlaceHolderC);
 		studentPanel.add(studentC);
+		studentPanel.add(empty1);
 
 		// adding email label and text field to email panel which then will be
 		// added to forth panel
 		emailPanel.add(emailPlaceHolderC);
+		emailC.setPreferredSize(new Dimension(250,50));
+		emailC.setEditable(false);
 		emailPanel.add(emailC);
 		emailPanel.add(editEmail);
 
 		// adding pin label and text field to email panel which then will be
 		// added to forth panel
 		namePanel.add(namePlaceHolderC);
+		nameC.setPreferredSize(new Dimension(250,50));
+		nameC.setEditable(false);
 		namePanel.add(nameC);
 
 		carMakePanelC.add(makeLabelC);
@@ -856,14 +931,15 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 		// adding the inner panel to forth panel
 
-		forthMainPanel.add(studentPanel);
+
+//		forthMainPanel.add(studentPanel);
 		forthMainPanel.add(emailPanel);
 
 		forthMainPanel.add(namePanel);
 		forthMainPanel.add(platePanel1);
 
 		forthMainPanel.add(carMakePanelC);
-		forthMainPanel.add(carModelPanelC);
+//		forthMainPanel.add(carModelPanelC);
 		forthMainPanel.add(companyPanelC);
 		forthMainPanel.add(policyPanelC);
 		forthMainPanel.add(amountPanelC);
@@ -923,6 +999,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 		model.addFocusListener(this);
 		plate.addFocusListener(this);
 		email.addFocusListener(this);
+		policy.addFocusListener(this);
 
 		next.addActionListener(this);
 		back.addActionListener(this);
@@ -937,20 +1014,42 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 	@Override
 	public void focusGained(FocusEvent e) {
 		if (e.getSource().equals(student)) {
+			isFocusModel = false;
 			isFocusID = true;
 			isFocusPin = false;
+			isFocusPlate = false;
+			isFocusEmail = false;
+			isFocusPolicy = false;
+			if(student.getText().equals(tapPlaceHolder)) {
+				student.setText("");
+				student.setForeground(Color.black);
+			}
 
 		} else if (e.getSource().equals(pin)) {
+			isFocusModel = false;
 			isFocusID = false;
 			isFocusPin = true;
+			isFocusPlate = false;
+			isFocusEmail = false;
+			isFocusPolicy = false;
+			if(pin.getText().equals(tapPlaceHolder)) {
+				pin.setText("");
+				pin.setForeground(Color.black);
+			}
 
 		}
 
 		else if (e.getSource().equals(model)) {
-			isFocusPlate = false;
+			isFocusModel = true;
 			isFocusID = false;
 			isFocusPin = false;
-			isFocusModel = true;
+			isFocusPlate = false;
+			isFocusEmail = false;
+			isFocusPolicy = false;
+			if(model.getText().equals(tapPlaceHolder1)) {
+				model.setText("");
+				model.setForeground(Color.black);
+			}
 
 		}
 
@@ -959,6 +1058,12 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 			isFocusID = false;
 			isFocusPin = false;
 			isFocusPlate = true;
+			isFocusEmail = false;
+			isFocusPolicy = false;
+			if(plate.getText().equals(tapPlaceHolder1)) {
+				plate.setText("");
+				plate.setForeground(Color.black);
+			}
 		}
 
 		else if (e.getSource().equals(email)) {
@@ -966,6 +1071,25 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 			isFocusID = false;
 			isFocusPin = false;
 			isFocusPlate = false;
+			isFocusEmail = true;
+			isFocusPolicy = false;
+			if(email.getText().equals(tapPlaceHolder1)) {
+				email.setText("");
+				email.setForeground(Color.black);
+			}
+		}
+		
+		else if (e.getSource().equals(policy)) {
+			isFocusModel = false;
+			isFocusID = false;
+			isFocusPin = false;
+			isFocusPlate = false;
+			isFocusEmail = false;
+			isFocusPolicy = true;
+			if(policy.getText().equals(tapPlaceHolder1)) {
+				policy.setText("");
+				policy.setForeground(Color.black);
+			}
 		}
 
 	}
@@ -1208,11 +1332,14 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 					}
 					if (isFocusPin == true) {
 						pinNum += info;
+						tempPin += "*";
 						if (info.compareTo("<<") == 0) {
 							pinNum = "";
+							tempPin = "";
 						}
 						if (info.compareTo("<") == 0) {
 							pinNum = pinNum.substring(0, pinNum.length() - 1);
+							tempPin = tempPin.substring(0, tempPin.length() - 1);
 						}
 
 						if (info.compareTo("<") == 0 && pinNum.length() != 0) {
@@ -1223,8 +1350,15 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 							secondPart = pinNum.substring(0,
 									pin.getCaretPosition() - 1);
 							pinNum = secondPart + firstPart;
+							
+							
+							firstPart = tempPin.substring(
+									pin.getCaretPosition(), tempPin.length());
+							secondPart = tempPin.substring(0,
+									pin.getCaretPosition() - 1);
+							tempPin = secondPart + firstPart;
 						}
-						pin.setText(pinNum);
+						pin.setText(tempPin);
 						nameC.setText(pinNum);
 						System.out.println("::::::::Pin Number::::::::");
 						System.out.println(pinNum);
@@ -1250,11 +1384,11 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 				if (isFocusModel == true) {
 					modelNum += info;
-					if (e.getSource() == button2[6][5]) {
+					if (e.getSource() == button2[6][2]) {
 						modelNum = modelNum.substring(0, modelNum.length() - 6);
 					}
 
-					if (e.getSource() == button2[6][5]
+					if (e.getSource() == button2[6][2]
 							&& modelNum.length() != 0) {
 						String firstPart = "";
 						String secondPart = "";
@@ -1272,11 +1406,11 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 				if (isFocusPlate == true) {
 					plateNum += info;
 
-					if (e.getSource() == button2[6][5]) {
+					if (e.getSource() == button2[6][2]) {
 						plateNum = plateNum.substring(0, plateNum.length() - 6);
 					}
 
-					if (e.getSource() == button2[6][5]
+					if (e.getSource() == button2[6][2]
 							&& plateNum.length() != 0) {
 						String firstPart = "";
 						String secondPart = "";
@@ -1296,7 +1430,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 			else if (fifthPanel == component) {
 
-				if (e.getSource() == swap5N || e.getSource() == button4[6][4]) {
+				if (e.getSource() == swap5N || e.getSource() == button4[6][1]) {
 					remove(fifthPanel);
 					add(thirdPanel);
 				}
@@ -1306,15 +1440,15 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 					add(secondPanel);
 				}
 
-				else {
+				else{
 					policyNum += info;
 
-					if (e.getSource() == button4[6][5]) {
+					if (e.getSource() == button4[6][2]) {
 						policyNum = policyNum.substring(0,
 								policyNum.length() - 6);
 					}
 
-					if (e.getSource() == button4[6][5]
+					if (e.getSource() == button4[6][2]
 							&& policyNum.length() != 0) {
 						String firstPart = "";
 						String secondPart = "";
@@ -1449,7 +1583,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 
 			else if (thirdPanel == component) {
 
-				if (e.getSource() == swap3N || e.getSource() == button3[6][4]) {
+				if (e.getSource() == swap3N || e.getSource() == button3[6][1]) {
 
 					remove(thirdPanel);
 					add(date);
@@ -1461,11 +1595,11 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 				} else {
 
 					emailAd += info;
-					if (e.getSource() == button3[6][5]) {
+					if (e.getSource() == button3[6][2]) {
 						emailAd = emailAd.substring(0, emailAd.length() - 6);
 					}
 
-					if (e.getSource() == button3[6][5] && emailAd.length() != 0) {
+					if (e.getSource() == button3[6][2] && emailAd.length() != 0) {
 						emailAd = emailAd.substring(0, emailAd.length() - 1);
 					}
 					email.setText(emailAd);
@@ -1482,11 +1616,13 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 				setTextField(email.getText(), emailC);
 				nameC.setText(getName(studentNum));
 				setTextField(plateNum, plateC);
+				setTextField(policy.getText(), policyC);
+				setTextField(email.getText(), emailC);
 				if(make.getSelectedItem().toString() == "-----Select The Make of Your Car------") {
 					makeC.setText("Not Provied");
 				}
 				else {
-					makeC.setText(make.getSelectedItem().toString());
+					makeC.setText(make.getSelectedItem().toString() + " " + model.getText().toString());
 				}
 				setTextField(model.getText(),modelC);
 				if(insurance.getSelectedItem().toString() == "Select a company name") {
@@ -1500,20 +1636,42 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 				daysC.setText(daysCountDisplay.getText());
 				if (e.getSource() == swap4F) {
 
-					// Rob I am resting all the string for the next customer.
-					studentNum = "";
-					pinNum = "";
-					emailAd = "";
-					info = "";
+					Object[] options = {"Thank You Guyz",
+	                   };
+						
+						String dayz = daysCount + "";
+						String  amountz =Double.toString(calAmount(daysCount));
+						System.out.print(amount);
 
-					student.setText(studentNum);
-					email.setText(emailAd);
-					pin.setText(pinNum);
-					studentC.setText(studentNum);
-					emailC.setText(emailAd);
+	int n = JOptionPane.showOptionDialog(frame,
+			"		Detalies"+"\n"+ "Student Number: "+studentNum + "\n" + 
+					"Name: "+ getName(studentNum) + "\n" + "Permit for " + dayz + " Days " +"\n"
+					 + "Amount Charged:" + amountz +"$",
+	    "Cofirm",
+	    JOptionPane.YES_NO_OPTION,
+	    JOptionPane.QUESTION_MESSAGE,
+	    null,     //do not use a custom Icon
+	    options,  //the titles of buttons
+	    options[0]); //default button title
+	
+	student.setText("");
+	email.setText("");
+	policy.setText("");
+	model.setText("");
+	plate.setText("");
+	
+	
+	
+	
+	studentNum = "";
+	pinNum = "";
+	emailAd = "";
+	info = "";	
+	policyNum = "";
+	modelNum = "";
+	plateNum = "";
+	// Rob I am resting all the string for the next customer.
 
-					JOptionPane
-							.showMessageDialog(null, "You Just Purchased it");
 					remove(forthPanel);
 					add(splash);
 

@@ -1659,7 +1659,7 @@ public class PanelSwap extends JPanel implements ActionListener, FocusListener {
 	policy.setText("");
 	model.setText("");
 	plate.setText("");
-	
+	pin.setText("");
 	
 	
 	

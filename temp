@@ -1,0 +1,26 @@
+					Object[] options = {"Thank You Guyz",
+                   };
+					
+					String dayz = daysCount + "";
+					String  amountz =Double.toString(calAmount(daysCount));
+					System.out.print(amount);
+
+int n = JOptionPane.showOptionDialog(frame,
+		"		Detalies"+"\n"+ "Student Number: "+studentNum + "\n" + 
+				"Name: "+ getName(studentNum) + "\n" + "Permit for " + dayz + " Days " +"\n"
+				 + "Amount Charged:" + amountz +"$",
+    "Cofirm",
+    JOptionPane.YES_NO_OPTION,
+    JOptionPane.QUESTION_MESSAGE,
+    null,     //do not use a custom Icon
+    options,  //the titles of buttons
+    options[0]); //default button title
+					
+// Rob I am resting all the string for the next customer.
+studentNum = "";
+pinNum = "";
+emailAd = "";
+info = "";	
+policyNum = "";
+modelNum = "";
+plateNum = "";
